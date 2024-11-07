@@ -15,7 +15,7 @@ export async function AvatarInfo() {
   return (
     <div className="flex items-center gap-3">
       <p className="capitalize text-foreground font-serif font-medium hidden md:block tracking-wider">
-        {user?.first_name && user.first_name}
+        {user?.first_name ? user.first_name : user?.username}
       </p>
       <Avatar>
         <AvatarImage src={imageSrc} alt="@shadcn" />

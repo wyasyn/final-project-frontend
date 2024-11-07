@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
 
   if (
     token &&
-    ["/login", "/sign-up"].some((path) =>
+    ["/login", "/sign-up", "/forgot-password"].some((path) =>
       request.nextUrl.pathname.startsWith(path)
     )
   ) {
@@ -14,7 +14,7 @@ export function middleware(request: NextRequest) {
 
   if (
     !token &&
-    !["/login", "/sign-up"].some((path) =>
+    !["/login", "/sign-up", "/forgot-password"].some((path) =>
       request.nextUrl.pathname.startsWith(path)
     )
   ) {

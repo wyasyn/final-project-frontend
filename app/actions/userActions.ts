@@ -31,3 +31,18 @@ export default async function getUser() {
     return;
   }
 }
+
+export const resetPassword = async (email: string) => {
+  try {
+    const response = await axios.post(`${apiUrl}/user/forgot-password`, {
+      email,
+    });
+    const { message } = response.data.message;
+    if (message) {
+      return { message };
+    }
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
+    return { error };
+  }
+};

@@ -30,6 +30,8 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import RedStar from "./RedStar";
+import { Alert, AlertDescription } from "./ui/alert";
 
 export default function RegistrationForm() {
   const { toast } = useToast();
@@ -100,7 +102,9 @@ export default function RegistrationForm() {
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="flex items-center">
+                  Email <RedStar />{" "}
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -111,7 +115,9 @@ export default function RegistrationForm() {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
+                <Label htmlFor="username" className="flex items-center">
+                  Username <RedStar />
+                </Label>
                 <Input
                   id="username"
                   value={username}
@@ -122,7 +128,9 @@ export default function RegistrationForm() {
               </div>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="flex items-center">
+                Password <RedStar />
+              </Label>
               <Input
                 id="password"
                 value={password}
@@ -279,12 +287,9 @@ export default function RegistrationForm() {
               </Link>
             </p>
             {error && (
-              <div
-                className="bg-red-400 text-red-800 px-6 py-2 rounded-md text-center w-full"
-                aria-label="error"
-              >
-                {error}
-              </div>
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             )}
           </CardFooter>
         </form>

@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Alert, AlertDescription } from "./ui/alert";
 
 export default function LoginForm() {
   const { toast } = useToast();
@@ -91,7 +92,7 @@ export default function LoginForm() {
                 <div className="flex items-center">
                   <Label htmlFor="password">Password</Label>
                   <Link
-                    href="#"
+                    href="/forgot-password"
                     className="ml-auto inline-block text-sm underline"
                   >
                     Forgot your password?
@@ -120,12 +121,9 @@ export default function LoginForm() {
               </Link>
             </div>
             {error && (
-              <div
-                className="bg-red-400 text-red-800 px-6 py-2 rounded-md text-center w-full"
-                aria-label="error"
-              >
-                {error}
-              </div>
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
             )}
           </CardContent>
         </form>
