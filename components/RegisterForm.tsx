@@ -48,12 +48,24 @@ export default function RegistrationForm() {
   const [lastName, setLastName] = useState("");
   const [career, setCareer] = useState("");
   const [error, setError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setSetLoading] = useState(false);
 
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match.");
+      toast({
+        variant: "destructive",
+        title: "Password Error",
+        description: "Passwords do not match.",
+      });
+      return;
+    }
+
     try {
       setSetLoading(true);
       const data = {
@@ -127,18 +139,33 @@ export default function RegistrationForm() {
                 />
               </div>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="flex items-center">
-                Password <RedStar />
-              </Label>
-              <Input
-                id="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                required
-              />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="password" className="flex items-center">
+                  Password <RedStar />
+                </Label>
+                <Input
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label className="flex items-center" htmlFor="confirm_password">
+                  Confirm Password <RedStar />
+                </Label>
+                <Input
+                  id="confirm_password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  type="password"
+                  required
+                />
+              </div>
             </div>
+
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
               <div className="space-y-2">
                 <Label htmlFor="first_name">First Name</Label>

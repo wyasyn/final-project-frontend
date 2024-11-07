@@ -7,9 +7,9 @@
 ### 1. **Landing Page / Welcome Page**
 
 - **Components**:
-  - [ ] A welcome message or tagline (e.g., "Take control of your finances")
-  - [ ] Login and Register buttons
-  - [ ] Brief description of features (optional)
+  - [x] A welcome message or tagline (e.g., "Take control of your finances")
+  - [x] Login and Register buttons
+  - [x] Brief description of features (optional)
 
 ---
 
