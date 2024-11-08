@@ -31,7 +31,7 @@ export default function page() {
               <div
                 className={`bg-primary group-hover:block hidden w-[50px] h-[50px] aspect-square rounded-full blur-3xl absolute top-0 right-0`}
               />
-              sign up now
+              Get started
             </Link>
             <Link
               href="/login"

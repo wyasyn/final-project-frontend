@@ -18,7 +18,7 @@
 - **Components**:
   - [x] **Email Field**: To input the user's email address
   - [x] **Password Field**: To input the user's password (with password visibility toggle)
-  - [ ] **Confirm Password Field**: To re-enter password for validation
+  - [x] **Confirm Password Field**: To re-enter password for validation
   - [x] **Register Button**: Submits the registration form
   - [x] **Link to Login Page**: For users who already have an account
 
