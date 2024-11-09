@@ -35,6 +35,7 @@ export interface User {
   first_name?: string;
   last_name?: string;
   middle_name?: string;
+  password: string;
   date_of_birth?: Date;
   image_url?: string;
   career?: string;
@@ -46,4 +47,22 @@ export interface User {
   expenses?: Expense[];
   budgets?: Budget[];
   savingsGoals?: SavingsGoal[];
+}
+
+export interface LoginDataProps {
+  identifier: string;
+  password: string;
+}
+
+export interface UserDataProps {
+  email: string;
+  username: string;
+  password: string;
+  first_name: string | undefined;
+  middle_name: string | undefined;
+  last_name: string | undefined;
+  career: string | undefined;
+  phone_number: string | undefined;
+  date_of_birth: string | undefined;
+  image_url: string | undefined;
 }

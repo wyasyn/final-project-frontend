@@ -28,10 +28,10 @@ import { format } from "date-fns";
 import { CalendarIcon, Loader2, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
-import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
 import RedStar from "./RedStar";
 import { Alert, AlertDescription } from "./ui/alert";
+import { createUser } from "@/app/actions/userActions";
 
 export default function RegistrationForm() {
   const { toast } = useToast();
@@ -72,32 +72,25 @@ export default function RegistrationForm() {
         email,
         username,
         password,
-        first_name: firstName,
-        middle_name: middleName,
-        last_name: lastName,
-        career,
-        phone_number: phoneNumber as string,
-        date_of_birth: date && (format(date, "yyyy-MM-dd") as string),
-        image_url: secureUrl,
+        first_name: firstName || undefined,
+        middle_name: middleName || undefined,
+        last_name: lastName || undefined,
+        career: career || undefined,
+        phone_number: (phoneNumber as string) || undefined,
+        date_of_birth: date ? format(date, "yyyy-MM-dd") : undefined,
+        image_url: secureUrl || undefined,
       };
 
-      const response = await axios.post("/api/auth/sign-up", data);
-      const { message, error } = response.data;
-      if (error) {
-        setError(error);
-        return;
-      }
-      if (message) {
-        toast({
-          title: "Success",
-          description: message,
-        });
+      const response = await createUser(data);
+      if (response?.error) {
+        setError(response.error);
+      } else {
+        router.refresh();
       }
     } catch (error) {
       setError(error as string);
     } finally {
       setSetLoading(false);
-      router.refresh();
     }
   };
 
@@ -115,7 +108,7 @@ export default function RegistrationForm() {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="email" className="flex items-center">
-                  Email <RedStar />{" "}
+                  Email <RedStar />
                 </Label>
                 <Input
                   id="email"

@@ -1,6 +1,5 @@
 "use client";
 
-import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader2, LogOut } from "lucide-react";
@@ -10,6 +9,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { logout } from "@/app/actions/userActions";
 
 export default function LogoutBtn() {
   const router = useRouter();
@@ -18,7 +18,7 @@ export default function LogoutBtn() {
   const logOut = async () => {
     setIsLoading(true);
     try {
-      await axios.post("/api/auth/logout");
+      await logout();
       router.refresh();
     } catch (error) {
       console.error("Logout failed:", error);

@@ -13,10 +13,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
 import { Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Alert, AlertDescription } from "./ui/alert";
+import { loginUser } from "@/app/actions/userActions";
 
 export default function LoginForm() {
   const { toast } = useToast();
@@ -32,39 +32,32 @@ export default function LoginForm() {
 
     try {
       setSetLoading(true);
-      const response = await axios.post("/api/auth/sign-in", {
-        identifier,
-        password,
-      });
+      const { error, message } = await loginUser({ identifier, password });
 
-      if (!response) {
-        throw new Error("Failed to fetch login response");
-      }
-
-      if (response.status === 401) {
-        setError("Invalid credentials");
-        return;
-      }
-
-      const { error, message } = response.data;
       if (error) {
+        // Handle the error case where there's an error but no message
         setError(error);
-        return;
-      }
-
-      if (message) {
+      } else if (message) {
+        // Success case with message
         toast({
           title: "Success",
           description: message,
         });
       }
     } catch (error) {
-      setError(error as string);
+      // Handling the error in case of an exception
+      if (error instanceof Error) {
+        setError(error.message); // If it's an instance of Error, use its message property
+      } else {
+        setError("An unexpected error occurred"); // For any other type, fall back to a generic message
+      }
     } finally {
+      // Always turn off loading indicator and refresh router
       setSetLoading(false);
       router.refresh();
     }
   };
+
   return (
     <div className="flex h-screen w-full items-center justify-center px-4">
       <Card className="mx-auto max-w-sm">

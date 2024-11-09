@@ -1,9 +1,10 @@
 "use server";
-import { User } from "@/types/types";
+import { LoginDataProps, User, UserDataProps } from "@/types/types";
 import axios from "axios";
 import { cookies } from "next/headers";
 const apiUrl = process.env.API_URL;
 import { AxiosError } from "axios";
+import { NextResponse } from "next/server";
 
 export default async function getUser() {
   // Get the token from cookies
@@ -90,5 +91,108 @@ export const updatePassword = async (password: string, token: string) => {
     return { message };
   } catch (error) {
     return { error };
+  }
+};
+
+export const createUser = async (userData: UserDataProps) => {
+  const { username, email, password, first_name, last_name } = userData;
+  if (!username || !email || !password || !first_name || !last_name) {
+    return { error: "All fields are required" };
+  }
+
+  try {
+    const response = await axios.post(`${apiUrl}/user/add-user`, userData);
+
+    if (!response) {
+      return { error: "Response not obtained!" };
+    }
+
+    const cookiesData = response.headers["set-cookie"];
+    if (cookiesData) {
+      const accessTokenCookie = cookiesData.find((cookie: string) =>
+        cookie.startsWith("access_token_cookie=")
+      );
+      if (accessTokenCookie) {
+        // Extract the token value (removing `access_token_cookie=` and any trailing flags)
+        const token = accessTokenCookie.split(";")[0].split("=")[1];
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        cookies().set("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: 60 * 60 * 24 * 7,
+          path: "/",
+        });
+      } else {
+        console.error("Access token not found in cookies.");
+      }
+    } else {
+      console.error("Set-cookie header not present in response.");
+    }
+  } catch (error) {
+    console.log(error);
+
+    return { error: `${error}` };
+  }
+};
+
+export const loginUser = async (loginData: LoginDataProps) => {
+  const { identifier, password } = loginData;
+
+  if (!identifier || !password) {
+    return { error: "Both identifier and password are required" };
+  }
+
+  try {
+    const response = await axios.post(`${apiUrl}/user/login`, loginData);
+
+    if (!response) {
+      return { error: "Response not obtained!" };
+    }
+
+    const cookiesData = response.headers["set-cookie"];
+
+    if (cookiesData) {
+      const accessTokenCookie = cookiesData.find((cookie: string) =>
+        cookie.startsWith("access_token_cookie=")
+      );
+
+      if (accessTokenCookie) {
+        const token = accessTokenCookie.split(";")[0].split("=")[1];
+
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        cookies().set("token", token, {
+          httpOnly: true,
+          secure: process.env.NODE_ENV === "production",
+          maxAge: 60 * 60 * 24 * 7,
+          path: "/",
+        });
+
+        return { message: "Login successful" };
+      } else {
+        console.error("Access token not found in cookies.");
+        return { error: "Access token not found in cookies" };
+      }
+    } else {
+      console.error("Set-cookie header not present in response.");
+      return { error: "Set-cookie header not present in response" };
+    }
+  } catch (error) {
+    console.error(error);
+    return { error: `${error}` };
+  }
+};
+
+export const logout = async () => {
+  try {
+    // Attempt to delete the token cookie
+    cookies().delete("token");
+    return NextResponse.json({ message: "Token deleted successfully" });
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An unknown error occurred";
+    return new NextResponse(`An error occurred: ${errorMessage}`, {
+      status: 500,
+    });
   }
 };
