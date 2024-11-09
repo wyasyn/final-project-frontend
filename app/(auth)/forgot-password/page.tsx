@@ -27,24 +27,31 @@ export default function ForgotPasswordForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Initial loading state
     setIsLoading(true);
     setError(null);
     setSuccess(false);
 
     try {
-      setSuccess(true);
+      // Try to reset password
+      const response = await resetPassword(email);
 
-      await resetPassword(email).then(() => {
-        setIsLoading(false);
-        setError(null);
+      const { message, error } = response;
+
+      if (error) {
+        setError(error); // Handle specific error from the response
+      } else if (message) {
+        // Password reset email sent successfully
         setSuccess(true);
-      });
-      router.push("/login");
+        router.push("/login");
+      }
     } catch (err) {
-      console.log(err);
-
+      // Handle error and display a message
+      console.error(err);
       setError("An error occurred. Please try again.");
     } finally {
+      // Stop loading no matter what
       setIsLoading(false);
     }
   };
