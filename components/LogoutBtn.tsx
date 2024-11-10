@@ -18,7 +18,13 @@ export default function LogoutBtn() {
   const logOut = async () => {
     setIsLoading(true);
     try {
-      await logout();
+      const { error, message } = await logout();
+
+      if (error) {
+        console.error("Logout failed:", error);
+        return;
+      }
+      console.log("Logged out successfully:", message);
       router.refresh();
     } catch (error) {
       console.error("Logout failed:", error);

@@ -4,7 +4,6 @@ import axios from "axios";
 import { cookies } from "next/headers";
 const apiUrl = process.env.API_URL;
 import { AxiosError } from "axios";
-import { NextResponse } from "next/server";
 
 export default async function getUser() {
   // Get the token from cookies
@@ -187,12 +186,10 @@ export const logout = async () => {
   try {
     // Attempt to delete the token cookie
     cookies().delete("token");
-    return NextResponse.json({ message: "Token deleted successfully" });
+    return { message: "Token deleted successfully" };
   } catch (error) {
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";
-    return new NextResponse(`An error occurred: ${errorMessage}`, {
-      status: 500,
-    });
+    return { error: errorMessage };
   }
 };
