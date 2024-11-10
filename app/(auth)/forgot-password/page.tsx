@@ -17,6 +17,7 @@ import { Loader2 } from "lucide-react";
 
 import { useRouter } from "next/navigation";
 import { resetPassword } from "@/app/actions/userActions";
+import Link from "next/link";
 
 export default function ForgotPasswordForm() {
   const router = useRouter();
@@ -93,7 +94,7 @@ export default function ForgotPasswordForm() {
           </div>
         </form>
       </CardContent>
-      <CardFooter>
+      <CardFooter className="flex flex-col space-y-4">
         <Button
           className="w-full"
           type="submit"
@@ -103,6 +104,12 @@ export default function ForgotPasswordForm() {
           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           {isLoading ? "Sending Reset Link" : "Send Reset Link"}
         </Button>
+        <div className="text-center text-sm">
+          Remembered your password?{" "}
+          <Link href="/login" className="text-primary hover:underline">
+            Back to login
+          </Link>
+        </div>
       </CardFooter>
     </Card>
   );

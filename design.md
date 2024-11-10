@@ -30,7 +30,7 @@
   - [x] **Email Field**: To input the user's email address
   - [x] **Password Field**: To input the user's password (with password visibility toggle)
   - [x] **Login Button**: Submits the login form
-  - [ ] **Forgot Password Link**: To redirect to password reset page
+  - [x] **Forgot Password Link**: To redirect to password reset page
   - [x] **Link to Registration Page**: For new users
 
 ---
@@ -114,17 +114,17 @@
 ### 11. **Forgot Password Page**
 
 - **Components**:
-  - [ ] **Email Input**: To send a password reset link to the user
-  - [ ] **Submit Button**: To send the reset link to the user’s email
-  - [ ] **Link to Login Page**: For users who remember their password
+  - [x] **Email Input**: To send a password reset link to the user
+  - [x] **Submit Button**: To send the reset link to the user’s email
+  - [x] **Link to Login Page**: For users who remember their password
 
 ---
 
 ### 12. **Error Pages (404, 500)**
 
 - **Components**:
-  - [ ] **Error Message**: A friendly message informing the user of the error
-  - [ ] **Navigation Links**: Options to go back to the home page or contact support if necessary
+  - [x] **Error Message**: A friendly message informing the user of the error
+  - [x] **Navigation Links**: Options to go back to the home page or contact support if necessary
 
 ---
 
