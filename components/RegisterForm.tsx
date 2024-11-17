@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/card";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Calendar } from "@/components/ui/calendar";
@@ -234,7 +235,7 @@ export default function RegistrationForm() {
                 value={phoneNumber}
                 id="phone_number"
                 type="tel"
-                placeholder="(256) 000-000-000"
+                placeholder="75269541452"
                 className="input-phone "
               />
             </div>

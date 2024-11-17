@@ -1,17 +1,34 @@
-import { PieChart, TrendingUp, Wallet } from "lucide-react";
+import {
+  DollarSign,
+  Home,
+  PieChart,
+  PiggyBank,
+  Target,
+  TrendingUp,
+  Wallet,
+} from "lucide-react";
 
-export const navLinks = [
+export const menuItems = [
+  { name: "Dashboard", icon: <Home className="h-4 w-4" />, href: "/dashboard" },
   {
-    name: "Dashboard",
-    path: "/dashboard",
+    name: "Transactions",
+    icon: <DollarSign className="h-4 w-4" />,
+    href: "/dashboard/transactions",
   },
   {
-    name: "Reports",
-    path: "/reports",
+    name: "Budgeting",
+    icon: <PiggyBank className="h-4 w-4" />,
+    href: "/dashboard/budgeting",
   },
   {
-    name: "Settings",
-    path: "/settings",
+    name: "Savings Goals",
+    icon: <Target className="h-4 w-4" />,
+    href: "/dashboard/savings-goals",
+  },
+  {
+    name: "Insights",
+    icon: <TrendingUp className="h-4 w-4" />,
+    href: "/dashboard/insights",
   },
 ];
 

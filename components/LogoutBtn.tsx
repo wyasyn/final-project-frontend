@@ -3,13 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Loader2, LogOut } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+
 import { logout } from "@/app/actions/userActions";
+import { Button } from "./ui/button";
 
 export default function LogoutBtn() {
   const router = useRouter();
@@ -34,27 +30,22 @@ export default function LogoutBtn() {
   };
 
   return (
-    <TooltipProvider>
-      <Tooltip>
-        <TooltipTrigger
-          onClick={logOut}
-          disabled={isLoading}
-          className="w-full flex items-center justify-center py-2"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 size={16} className="animate-spin" />
-            </>
-          ) : (
-            <>
-              <LogOut size={16} aria-label="logout" />
-            </>
-          )}
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>Logout</p>
-        </TooltipContent>
-      </Tooltip>
-    </TooltipProvider>
+    <Button
+      variant="ghost"
+      onClick={logOut}
+      disabled={isLoading}
+      className="w-full justify-start flex items-center gap-3 px-1 py-1"
+    >
+      {isLoading ? (
+        <>
+          <Loader2 size={16} className="animate-spin" />
+        </>
+      ) : (
+        <>
+          <LogOut size={16} className="mr-2 h-4 w-4" aria-label="logout" />{" "}
+          Logout
+        </>
+      )}
+    </Button>
   );
 }
